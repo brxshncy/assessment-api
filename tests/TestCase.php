@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -29,5 +30,11 @@ abstract class TestCase extends BaseTestCase
     {
        return Role::create(['guard_name' => 'api', 'name' => 'applicant']);
     }
-     
+    
+    public function createAdminUser (Array $attributes = []): User 
+    {
+        return User::factory()
+                    ->create($attributes)
+                    ->assignRole(Role::where('name', 'admin')->first());
+    }
 }

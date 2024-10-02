@@ -10,7 +10,7 @@ use Spatie\Permission\Models\Role;
 class RegisterController extends Controller
 {
     /**
-     * Handle the incoming request.
+     * Handle the incoming request.xxp
      */
 
     public function __invoke(RegisterPostRequest $request)
