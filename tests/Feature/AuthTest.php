@@ -14,7 +14,7 @@ class AuthTest extends TestCase
 
     private $payload;
     private $admin;
-
+    private $applicant;
     protected function setUp(): void 
     {
         parent::setUp();
@@ -25,7 +25,7 @@ class AuthTest extends TestCase
             'password' => 'random',
         ];
         $this->admin = $this->createAdminUser();
-
+        $this->applicant = $this->createApplicantUser();
     }
 
     public function test_admin_role_register()
@@ -53,7 +53,7 @@ class AuthTest extends TestCase
 
     }
 
-    public function test_admin_can_login()
+    public function test_admin_can_login():  void
     {
         $this->withoutExceptionHandling();
         $payload = [
@@ -61,11 +61,25 @@ class AuthTest extends TestCase
             'password' => 'password'
         ];
         $response = $this->postJson(route('auth.sign-in'), $payload);
-        dump($response->json());
         $response->assertStatus(200)
                 ->assertJsonStructure([
                    'data' => ['user', 'accessToken', 'role']
                 ])
                 ->assertJsonPath('data.role.0', 'admin');
+    }
+
+    public function test_applicant_can_login(): void
+    {
+        $this->withoutExceptionHandling();
+        $payload = [
+            'email' => $this->applicant->email, 
+            'password' => 'password'
+        ];
+        $response = $this->postJson(route('auth.sign-in'), $payload);
+        $response->assertStatus(200)
+                 ->assertJsonStructure([
+                   'data' => ['user', 'accessToken', 'role']
+                ])
+                ->assertJsonPath('data.role.0', 'applicant');
     }
 }

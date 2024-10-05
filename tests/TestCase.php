@@ -18,23 +18,33 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
         $this->createAdminRole();
-        $this->createApplicant();
+        $this->createApplicantRole();
     }
 
     public function createAdminRole (): ContractsRole
     {
-       return Role::create(['guard_name' => 'api', 'name' => 'admin']);
+       return Role::firstOrCreate(['guard_name' => 'api', 'name' => 'admin']);
     }
 
-    public function createApplicant (): ContractsRole
+    public function createApplicantRole (): ContractsRole
     {
-       return Role::create(['guard_name' => 'api', 'name' => 'applicant']);
+       return Role::firstOrCreate(['guard_name' => 'api', 'name' => 'applicant']);
     }
     
     public function createAdminUser (Array $attributes = []): User 
     {
         return User::factory()
                     ->create($attributes)
-                    ->assignRole(Role::where('name', 'admin')->first());
+                    ->assignRole(
+                        Role::where('name', 'admin')->first()
+                    );
+    }
+    public function createApplicantUser (Array $attributes = []): User
+    {
+        return User::factory()
+                    ->create($attributes)
+                    ->assignRole(
+                        Role::where('name', 'applicant')->first()
+                    );
     }
 }
