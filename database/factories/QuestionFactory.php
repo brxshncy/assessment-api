@@ -19,9 +19,9 @@ class QuestionFactory extends Factory
     {
         return [
             'question' => $this->faker->word,
-            'exam_id' => Exam::inRandomOrder()
-                             ->first()
-                             ->id
+            'exam_id' => Exam::factory()
+                ->create()
+                ->id
         ];
     }
 }
