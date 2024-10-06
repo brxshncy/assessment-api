@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Exam;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Sanctum\Sanctum;
@@ -13,7 +14,7 @@ class QuestionTest extends TestCase
     use WithFaker;
     private $admin;
 
-    protected function setUp(): void 
+    protected function setUp(): void
     {
         parent::setUp();
         $this->admin = $this->createAdminUser();
@@ -22,7 +23,8 @@ class QuestionTest extends TestCase
     {
         $this->withoutExceptionHandling();
         $payload = [
-            'question' => 'Test Question'
+            'question' => 'Test Question',
+            'exam_id' => Exam::inRandomOrder()->first() ? Exam::inRandomOrder()->first()->id : Exam::factory()->create()->id,
         ];
         Sanctum::actingAs(
             $this->admin,
@@ -30,9 +32,8 @@ class QuestionTest extends TestCase
         );
         $response = $this->postJson(route('admin.question.store'), $payload);
         $response->assertStatus(203)
-                 ->assertJsonStructure([
-                    'data' => ['question']
-                 ]);
+            ->assertJsonStructure([
+                'data' => ['question']
+            ]);
     }
-
 }

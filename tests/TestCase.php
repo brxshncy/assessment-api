@@ -2,6 +2,8 @@
 
 namespace Tests;
 
+use App\Models\Exam;
+use App\Models\Question;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
@@ -46,5 +48,15 @@ abstract class TestCase extends BaseTestCase
                     ->assignRole(
                         Role::where('name', 'applicant')->first()
                     );
+    }
+
+    public function createExam (Array $attributes = []) : Exam
+    {
+        return Exam::factory()->create($attributes);
+    }
+
+    public function createQuestion (Array $attributes = []): Question
+    {
+        return Question::factory()->create($attributes);
     }
 }

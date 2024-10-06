@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Exam;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,6 +19,9 @@ class QuestionFactory extends Factory
     {
         return [
             'question' => $this->faker->word,
+            'exam_id' => Exam::inRandomOrder()
+                             ->first()
+                             ->id
         ];
     }
 }

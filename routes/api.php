@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ExamController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\RegisterController;
@@ -20,5 +21,6 @@ Route::group(['prefix' => 'auth'], function () {
 Route::group([
         "middleware" => ["auth:sanctum", "role:admin"], 
         "prefix" => "admin", "as" => "admin."], function () {
-    Route::apiResource("question", QuestionController::class);
+        Route::apiResource("question", QuestionController::class);
+        Route::apiResource("exams", ExamController::class);
 });
