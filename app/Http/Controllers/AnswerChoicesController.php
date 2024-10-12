@@ -42,9 +42,15 @@ class AnswerChoicesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(AnswerChoicesRequest $request, AnswerChoices $answerChoices)
     {
-        //
+        $question = Question::findOrFail($request->question_id);
+
+        if ($question->question_type == QuestionType::MULTIPLE_CHOICE->value) {
+            $request->merge(['option_text' => json_encode($request->option_text)]);
+        }
+        tap($answerChoices)->update($request->all());
+        return response()->success($answerChoices);
     }
 
     /**

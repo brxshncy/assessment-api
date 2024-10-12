@@ -40,6 +40,10 @@ class AnswerChoicesRequest extends FormRequest
                     return $questionType === QuestionType::MULTIPLE_CHOICE->value;
                 }),
                 'array',
+                Rule::requiredIf(function () use ($questionType) {
+                    return $questionType !== QuestionType::ESSAY->value;
+                }),
+                'string',
                 'nullable'
             ]
         ];

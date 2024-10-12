@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use App\Models\AnswerChoices;
 use App\Models\Exam;
 use App\Models\Question;
 use App\Models\User;
@@ -58,5 +59,10 @@ abstract class TestCase extends BaseTestCase
     public function createQuestion(array $attributes = []): Question
     {
         return Question::factory()->create($attributes);
+    }
+
+    public function createAnswerChoices(array $attributes = []): AnswerChoices
+    {
+        return AnswerChoices::factory()->create($attributes);
     }
 }
