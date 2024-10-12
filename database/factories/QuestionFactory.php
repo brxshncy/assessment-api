@@ -2,8 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Enums\QuestionType;
 use App\Models\Exam;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Arr;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Question>
@@ -21,7 +23,8 @@ class QuestionFactory extends Factory
             'question' => $this->faker->word,
             'exam_id' => Exam::factory()
                 ->create()
-                ->id
+                ->id,
+            'question_type' => Arr::random(QuestionType::cases())->value
         ];
     }
 }

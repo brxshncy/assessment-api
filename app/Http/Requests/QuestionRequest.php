@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\QuestionType;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class QuestionRequest extends FormRequest
 {
@@ -22,7 +24,8 @@ class QuestionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'question' => 'required'
+            'question' => 'required',
+            'question_type' => ['required', Rule::enum(QuestionType::class)]
         ];
     }
 }

@@ -23,39 +23,39 @@ abstract class TestCase extends BaseTestCase
         $this->createApplicantRole();
     }
 
-    public function createAdminRole (): ContractsRole
+    public function createAdminRole(): ContractsRole
     {
-       return Role::firstOrCreate(['guard_name' => 'api', 'name' => 'admin']);
+        return Role::firstOrCreate(['guard_name' => 'api', 'name' => 'admin']);
     }
 
-    public function createApplicantRole (): ContractsRole
+    public function createApplicantRole(): ContractsRole
     {
-       return Role::firstOrCreate(['guard_name' => 'api', 'name' => 'applicant']);
-    }
-    
-    public function createAdminUser (Array $attributes = []): User 
-    {
-        return User::factory()
-                    ->create($attributes)
-                    ->assignRole(
-                        Role::where('name', 'admin')->first()
-                    );
-    }
-    public function createApplicantUser (Array $attributes = []): User
-    {
-        return User::factory()
-                    ->create($attributes)
-                    ->assignRole(
-                        Role::where('name', 'applicant')->first()
-                    );
+        return Role::firstOrCreate(['guard_name' => 'api', 'name' => 'applicant']);
     }
 
-    public function createExam (Array $attributes = []) : Exam
+    public function createAdminUser(array $attributes = []): User
+    {
+        return User::factory()
+            ->create($attributes)
+            ->assignRole(
+                Role::where('name', 'admin')->first()
+            );
+    }
+    public function createApplicantUser(array $attributes = []): User
+    {
+        return User::factory()
+            ->create($attributes)
+            ->assignRole(
+                Role::where('name', 'applicant')->first()
+            );
+    }
+
+    public function createExam(array $attributes = []): Exam
     {
         return Exam::factory()->create($attributes);
     }
 
-    public function createQuestion (Array $attributes = []): Question
+    public function createQuestion(array $attributes = []): Question
     {
         return Question::factory()->create($attributes);
     }

@@ -2,9 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\Enums\QuestionType;
 use App\Models\Exam;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Arr;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
@@ -40,6 +42,7 @@ class QuestionTest extends TestCase
         $payload = [
             'question' => 'Test Question',
             'exam_id' => Exam::inRandomOrder()->first() ? Exam::inRandomOrder()->first()->id : Exam::factory()->create()->id,
+            'question_type' => Arr::random(QuestionType::cases())->value
         ];
         Sanctum::actingAs(
             $this->admin,
@@ -72,6 +75,7 @@ class QuestionTest extends TestCase
         $payload = [
             'question' => 'Update Question',
             'exam_id' => Exam::inRandomOrder()->first() ? Exam::inRandomOrder()->first()->id : Exam::factory()->create()->id,
+            'question_type' => Arr::random(QuestionType::cases())->value
         ];
         Sanctum::actingAs(
             $this->admin,
